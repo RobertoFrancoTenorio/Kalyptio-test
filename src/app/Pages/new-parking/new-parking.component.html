@@ -1,0 +1,40 @@
+<div class="container mt-4">
+  <h1 class="text-centers">Fill all the information to add a new parking</h1>
+  <br>
+  <form action="" [formGroup]="parking_form">
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <label for="exampleFormControlInput1" class="form-label">Address</label>
+        <input type="text" class="form-control" formControlName="address" placeholder="Street #10, Main Avenue">
+      </div>
+      <div class="col-12 col-md-6">
+        <label for="exampleFormControlInput1" class="form-label">Amenities</label>
+        <input type="text" class="form-control" formControlName="amenities" placeholder="name@example.com">
+      </div>
+      <div class="col-12 col-md-6">
+        <label for="exampleFormControlInput1" class="form-label">Score</label>
+        <input type="text" class="form-control" formControlName="score" placeholder="Street #10, Main Avenue">
+      </div>
+      <div class="col-12 col-md-6">
+        <label for="exampleFormControlInput1" class="form-label">Price</label>
+        <input type="text" class="form-control" formControlName="price" placeholder="name@example.com">
+      </div>
+      <div class="col-12 col-md-6">
+        <label for="exampleFormControlInput1" class="form-label">Type</label>
+        <select class="form-select" formControlName="type" aria-label="Default select example">
+          <option selected>Open this select menu</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+      </div>
+      <div class="col-12 col-md-12">
+        <label for="exampleFormControlInput1" class="form-label">Description</label>
+        <textarea class="form-control" formControlName="description" id="exampleFormControlTextarea1" rows="3"></textarea>
+      </div>
+    </div>
+  </form>
+  <br>
+  <button class="btn btn-success" (click)="save_parking()">Continue</button>
+
+</div>
