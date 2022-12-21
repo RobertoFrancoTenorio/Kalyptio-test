@@ -8,18 +8,6 @@
         <input type="text" class="form-control" formControlName="address" placeholder="Street #10, Main Avenue">
       </div>
       <div class="col-12 col-md-6">
-        <label for="exampleFormControlInput1" class="form-label">Amenities</label>
-        <input type="text" class="form-control" formControlName="amenities" placeholder="name@example.com">
-      </div>
-      <div class="col-12 col-md-6">
-        <label for="exampleFormControlInput1" class="form-label">Score</label>
-        <input type="text" class="form-control" formControlName="score" placeholder="Street #10, Main Avenue">
-      </div>
-      <div class="col-12 col-md-6">
-        <label for="exampleFormControlInput1" class="form-label">Price</label>
-        <input type="text" class="form-control" formControlName="price" placeholder="name@example.com">
-      </div>
-      <div class="col-12 col-md-6">
         <label for="exampleFormControlInput1" class="form-label">Type</label>
         <select class="form-select" formControlName="type" aria-label="Default select example">
           <option selected>Open this select menu</option>
@@ -28,10 +16,32 @@
           <option value="3">Three</option>
         </select>
       </div>
+      <div class="col-12 col-md-6">
+        <label for="exampleFormControlInput1" class="form-label">Score</label>
+        <input type="number" class="form-control" formControlName="score" min="1" max="5" placeholder="Street #10, Main Avenue">
+      </div>
+      <div class="col-12 col-md-6">
+        <label for="exampleFormControlInput1" class="form-label">Price</label>
+        <input type="text" class="form-control" formControlName="price" placeholder="name@example.com">
+      </div>
+      <hr>
+      <div class="col-12">
+        <label for="exampleFormControlInput1" class="form-label">Amenities</label>
+        <input type="hidden" class="form-control" formControlName="amenities" placeholder="name@example.com">
+
+        <form [formGroup]="amenitiesForm" class="row">
+            <span class="col-12 col-md-6" *ngFor="let service of services; let amenitie of amenitiesForm.get('amenities')['controls'] ;let i = index">
+              <span class="" formArrayName="amenities"><input class="form-check-input" type="checkbox" name="" id="" [formControlName]="i"> {{services[i].name}}</span>
+            </span>
+        </form>
+
+      </div>
       <div class="col-12 col-md-12">
         <label for="exampleFormControlInput1" class="form-label">Description</label>
         <textarea class="form-control" formControlName="description" id="exampleFormControlTextarea1" rows="3"></textarea>
       </div>
+
+      <input type="file" name="" id="" formControlName="image">
     </div>
   </form>
   <br>

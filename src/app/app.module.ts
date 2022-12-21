@@ -7,7 +7,7 @@ import { NewParkingComponent } from './Pages/new-parking/new-parking.component';
 import { ListParkingsComponent } from './Pages/list-parkings/list-parkings.component';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +18,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     FormsModule,
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

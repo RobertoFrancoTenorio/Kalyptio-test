@@ -9,8 +9,115 @@
     <div class="card-body">
       <h5 class="card-title">I wan´t add a new parking</h5>
       <p class="card-text">Click the button below to create a new parking.</p>
-      <button class="btn btn-primary" (click)="go_to_add_Parking()"><i class="fa-solid fa-circle-plus"></i> New</button>
+      <button class="btn btn-primary" (click)="go_to_add_Parking()"><i class="fa-solid fa-circle-plus" id="star"></i> New</button>
     </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-12 col-md-12 col-lg-6" *ngFor="let parking of parkingList; let i = index">
+      <div class="card mb-3">
+        <div class="row">
+          <div class="col-12 col-md-5">
+            <div id="carouselExampleIndicators" class="carousel slide h-100" data-bs-ride="true">
+              <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              </div>
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="https://circontrol.com/wp-content/uploads/2019/02/180125-Circontrol-BAIXA-80-1080x675.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                  <img src="https://circontrol.com/wp-content/uploads/2019/02/180125-Circontrol-BAIXA-80-1080x675.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                  <img src="https://circontrol.com/wp-content/uploads/2019/02/180125-Circontrol-BAIXA-80-1080x675.jpg" class="d-block w-100" alt="...">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-auto">
+                  <h5 class="card-title">{{parking.address}}</h5>
+                </div>
+                <div class="col-auto">
+                  <h5 class="card-title"><i class="fa-solid fa-star"></i> {{parking.score}}</h5>
+                </div>
+                <hr>
+              </div>
+              <div class="row">
+                <div class="col-2 col-md-7" *ngIf="parking.amenities.includes('Cámaras')">
+                  <div class="row">
+                    <div class="col-auto" id="icon">
+                      <i class="fa-solid fa-eye" id="icon-services"></i>
+                    </div>
+                    <div class="col-auto d-none d-sm-block" id="description">
+                      <small>Cámaras</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-2 col-md-5" *ngIf="parking.amenities.includes('Cámaras')">
+                  <div class="row">
+                    <div class="col-auto" id="icon">
+                      <i class="fa-solid fa-person-shelter" id="icon-services"></i>
+                    </div>
+                    <div class="col-auto d-none d-sm-block" id="description">
+                      <small>Cajón Techado</small>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-2 col-md-7" *ngIf="parking.amenities.includes('Cajón Techado')">
+                  <div class="row">
+                    <div class="col-auto" id="icon">
+                      <i class="fa-regular fa-building" id="icon-services"></i>
+                    </div>
+                    <div class="col-auto d-none d-sm-block" id="description">
+                      <small>Departamento</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-2 col-md-5" *ngIf="parking.amenities.includes('Departamento')">
+                  <div class="row">
+                    <div class="col-auto" id="icon">
+                      <i class="fa-solid fa-stairs" id="icon-services"></i>
+                    </div>
+                    <div class="col-auto d-none d-sm-block" id="description">
+                      <small>Planta Baja</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-2 col-md-7" *ngIf="parking.amenities.includes('Planta Baja')">
+                  <div class="row">
+                    <div class="col-auto" id="icon">
+                      <i class="fa-solid fa-car-tunnel" id="icon-services"></i>
+                    </div>
+                    <div class="col-auto d-none d-sm-block" id="description">
+                      <small>Estacionamiento Cerrado</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-2 col-md-7" *ngIf="parking.amenities.includes('Estacionamiento Cerrado')">
+                  <div class="row">
+                    <div class="col-auto" id="icon">
+                      <i class="fa-solid fa-bars" id="icon-services"></i>
+                    </div>
+                    <div class="col-auto d-none d-sm-block" id="description">
+                      <small>Lugar en batería</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
