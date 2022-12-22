@@ -7,14 +7,14 @@ import { Observable } from 'rxjs/internal/Observable';
 })
 export class APIServiceService {
 
-  url = 'http://localhost:4000/api/parking/';
+  url = 'http://localhost:4000/api/parkings/';
 
   constructor(
     private http: HttpClient,
   ) { }
 
   getParkings(): Observable<any>{
-    return this.http.get(this.url + '/parkings')
+    return this.http.get(this.url + 'get_parkings')
   }
 
   save_Parking(parking){
@@ -23,5 +23,9 @@ export class APIServiceService {
 
   get_Parking(id: string){
     return this.http.get(this.url + id);
+  }
+
+  get_filtered_parkings(){
+    return this.http.get(this.url + 'search_parking');
   }
 }

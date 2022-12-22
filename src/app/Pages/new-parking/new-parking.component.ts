@@ -1,7 +1,8 @@
 import { APIServiceService } from './../../Services/api-service.service';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-new-parking',
@@ -29,10 +30,7 @@ export class NewParkingComponent implements OnInit {
     private router: Router,
     private parkingService: APIServiceService
   ) {
-    if(this.router.getCurrentNavigation().extras.state){
-      console.log('router', this.router.getCurrentNavigation().extras.state.parkingList);
-      this.current_parking_list = this.router.getCurrentNavigation().extras.state.parkingList
-    } else {
+    if(!this.router.getCurrentNavigation().extras.state){
       this.router.navigate([''])
     }
   }
@@ -40,7 +38,7 @@ export class NewParkingComponent implements OnInit {
   ngOnInit(): void {
     this.parking_form = this.form_constructor();
     this.amenitiesForm = this.fb.group({
-      amenities: new FormArray(this.services.map(control => new FormControl(false))),
+      amenities: new FormArray(this.services.map(control => new FormControl(false, [Validators.required]))),
     });
     this.imagesForm = this.fb.group({
     });
@@ -48,33 +46,37 @@ export class NewParkingComponent implements OnInit {
 
   form_constructor(): FormGroup{
     return new FormGroup({
-      address: new FormControl(""),
+      address: new FormControl("", [Validators.required]),
       amenities: new FormControl(""),
-      score: new FormControl(""),
-      price: new FormControl(""),
-      type: new FormControl(""),
-      description: new FormControl(""),
+      score: new FormControl("", [Validators.required]),
+      price: new FormControl("", [Validators.required]),
+      type: new FormControl("", [Validators.required]),
+      description: new FormControl("", [Validators.required]),
       image: new FormControl(""),
     })
   }
 
   save_parking(){
-    let list_amenities = {
-      amenities: this.amenitiesForm.value.amenities.map((checked, index) => checked ? this.services[index].name : null).filter(value => value !== null)
-    }
-    this.parking_form.value.amenities = list_amenities.amenities;
-    this.current_parking_list.push(this.parking_form.value);
+    this.parking_form.value.amenities = this.amenitiesForm.value.amenities.map((checked, index) => checked ? this.services[index].name : null).filter(value => value !== null);
 
     this.parkingService.save_Parking(this.parking_form.value).subscribe(parking =>{
       console.log('parking', parking)
     })
 
-    const navigationExtras : NavigationExtras = {
-      state: {
-        parkingList: this.current_parking_list
-      }
-    }
-    this.router.navigate([''], navigationExtras)
+    console.log('Amenities', this.amenitiesForm.value.amenities);
+
+    this.alert()
+  }
+
+  alert(){
+    Swal.fire({
+      icon: 'success',
+      title: 'Registro Completado',
+      text: 'Parking almacenado con éxito',
+      confirmButtonText: 'Save',
+    }).then(() => {
+      this.router.navigate([''])
+    })
   }
 
 }

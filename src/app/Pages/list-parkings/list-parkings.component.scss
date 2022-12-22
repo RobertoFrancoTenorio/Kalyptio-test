@@ -22,7 +22,7 @@
 }
 
 .card{
-  min-height: 20vh;
+  min-height: 26vh;
 }
 
 .fa-arrow-right{
@@ -39,16 +39,7 @@
   font-weight: 600;
 }
 
-@media  (max-width: 768px){
-  #icon-services{
-    color: #fff;
-    background-color: #152674;
-    border-radius:20px;
-    margin-right: 105px;
-  }
-
-  .carousel{
-    width: 70%;
-    height: 80%;
-  }
+.carousel-inner{
 }
+
+

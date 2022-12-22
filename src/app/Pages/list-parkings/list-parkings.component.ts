@@ -22,17 +22,10 @@ export class ListParkingsComponent implements OnInit {
     private modalService: NgbModal,
     private readonly sanitizer: DomSanitizer
   ) {
-    console.log('router', this.router.getCurrentNavigation())
-    if(this.router.getCurrentNavigation().extras.state){
-      this.parking_Service.getParkings().subscribe(parkings => {
-        console.log('Parking', parkings)
-      })
-      console.log('Si contiene state');
-      this.parkingList = this.router.getCurrentNavigation().extras.state.parkingList
-      console.log('lista', this.parkingList)
-    } else {
-      console.log('No contiene state');
-    }
+    this.parking_Service.getParkings().subscribe(parkings => {
+      console.log('Parking', parkings)
+      this.parkingList = parkings
+    })
   }
 
   ngOnInit(): void {
@@ -41,7 +34,7 @@ export class ListParkingsComponent implements OnInit {
   go_to_add_Parking(){
     const navigationExtras : NavigationExtras = {
       state: {
-        parkingList: this.parkingList
+        estatus: true
       }
     }
     this.router.navigate(['new'], navigationExtras)
@@ -49,7 +42,6 @@ export class ListParkingsComponent implements OnInit {
 
   get_Parking(id, content){
     this.parking_Service.get_Parking(id).subscribe(parking => {
-      console.log('Parking', parking);
       this.current_parking = parking
     })
 
@@ -58,5 +50,13 @@ export class ListParkingsComponent implements OnInit {
 				this.closeResult = `Closed with: ${result}`;
 			},
 		);
+  }
+
+  filter_parkings(){
+/*     console.log('Filter', this.parkingList.filter(parking => parking['score'] == 1));
+ */
+    this.parking_Service.get_filtered_parkings().subscribe(parkings => {
+      console.log('Filtered Parkings', parkings);
+    })
   }
 }
