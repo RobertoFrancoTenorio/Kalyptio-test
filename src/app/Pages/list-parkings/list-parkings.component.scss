@@ -16,7 +16,39 @@
 
 #icon-services{
   color: #fff;
-  background-color: #252525;
+  background-color: #152674;
   padding: 5px;
   border-radius:20px
+}
+
+.card{
+  min-height: 20vh;
+}
+
+.fa-arrow-right{
+  color: #152674;
+  margin-right: 10px;
+}
+
+#dolar{
+  color: #152674;
+}
+
+.total{
+  color: #152674;
+  font-weight: 600;
+}
+
+@media  (max-width: 768px){
+  #icon-services{
+    color: #fff;
+    background-color: #152674;
+    border-radius:20px;
+    margin-right: 105px;
+  }
+
+  .carousel{
+    width: 70%;
+    height: 80%;
+  }
 }

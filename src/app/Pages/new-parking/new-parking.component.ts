@@ -58,18 +58,12 @@ export class NewParkingComponent implements OnInit {
     })
   }
 
-  form_amenities_constructor(): FormGroup{
-    return new FormGroup({
-    })
-  }
-
   save_parking(){
     let list_amenities = {
       amenities: this.amenitiesForm.value.amenities.map((checked, index) => checked ? this.services[index].name : null).filter(value => value !== null)
     }
     this.parking_form.value.amenities = list_amenities.amenities;
     this.current_parking_list.push(this.parking_form.value);
-    console.log('New parking', this.current_parking_list);
 
     this.parkingService.save_Parking(this.parking_form.value).subscribe(parking =>{
       console.log('parking', parking)
