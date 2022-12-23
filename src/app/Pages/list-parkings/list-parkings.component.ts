@@ -1,3 +1,4 @@
+import { FormControl, FormGroup } from '@angular/forms';
 import { APIServiceService } from './../../Services/api-service.service';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -11,10 +12,10 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ListParkingsComponent implements OnInit {
   parkingList: [] = [];
-  urlPic: string;
-  newUrl: any;
   closeResult = '';
   current_parking: Object;
+  filtered: any;
+  filterForm: any;
 
   constructor(
     private router: Router,
@@ -22,13 +23,12 @@ export class ListParkingsComponent implements OnInit {
     private modalService: NgbModal,
     private readonly sanitizer: DomSanitizer
   ) {
-    this.parking_Service.getParkings().subscribe(parkings => {
-      console.log('Parking', parkings)
-      this.parkingList = parkings
-    })
+    this.loadParkings();
+
   }
 
   ngOnInit(): void {
+    this.filterForm = this.filter_form_builder();
   }
 
   go_to_add_Parking(){
@@ -52,11 +52,36 @@ export class ListParkingsComponent implements OnInit {
 		);
   }
 
-  filter_parkings(){
-/*     console.log('Filter', this.parkingList.filter(parking => parking['score'] == 1));
- */
-    this.parking_Service.get_filtered_parkings().subscribe(parkings => {
-      console.log('Filtered Parkings', parkings);
+  async filter_parkings(filter, value){
+    let filtrados = []
+    let navigationExtras : NavigationExtras = {}
+    await this.parking_Service.getParkings().subscribe(parkings => {
+      this.filtered = parkings.filter(parking => parking[filter] === value)
+      switch(filter){
+        case 'Max Price':
+          navigationExtras.state = parkings.filter(parking => parking[filter] >= value)
+        break;
+        case 'Min Price':
+          navigationExtras.state = parkings.filter(parking => parking[filter] <= value)
+        break;
+        default:
+          navigationExtras.state = parkings.filter(parking => parking[filter] == value)
+      }
+      console.log('filtrados',  navigationExtras.state);
+    })
+  }
+
+  filter_form_builder(){
+    return new FormGroup({
+      filter: new FormControl(""),
+      value: new FormControl(""),
+    })
+  }
+
+  loadParkings(){
+    this.parking_Service.getParkings().subscribe(parkings => {
+      console.log('Parking', parkings)
+      this.parkingList = parkings
     })
   }
 }

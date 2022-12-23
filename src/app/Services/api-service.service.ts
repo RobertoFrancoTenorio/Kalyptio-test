@@ -26,6 +26,7 @@ export class APIServiceService {
   }
 
   get_filtered_parkings(){
+    console.log('get_FILTERED_parkings_SERVICE')
     return this.http.get(this.url + 'search_parking');
   }
 }

@@ -14,20 +14,39 @@
       </div>
     </div>
     <br>
-    <div class="row">
+    <div class="row" [formGroup]="filterForm">
       <div class="col-12 mb-3">
         <div class="row">
-          <div class="col-auto">
-            <label for="exampleFormControlInput1" class="form-label">Filter Type</label>
+          <div class="col-6">
+            <label for="exampleFormControlInput1" class="form-label">Filter by:</label>
           </div>
           <div class="col-6">
-            <select class="form-select" aria-label="Default select example">
-              <option value="Private">Private</option>
-              <option value="Public">Public</option>
+            <select class="form-select" formControlName="filter" aria-label="Default select example">
+              <option value="score">Max Price</option>
+              <option value="score">Min Price</option>
+              <option value="type">Type</option>
+              <option value="Amenities">Amenities</option>
             </select>
           </div>
+          <div class="col-6 mt-sm-3" *ngIf="this.filterForm.value.filter != ''">
+            <label for="exampleFormControlInput1" class="form-label">Value</label>
+          </div>
+          <div class="col-6 mt-2" *ngIf="this.filterForm.value.filter != ''">
+            <span *ngIf="this.filterForm.value.filter == 'score'">
+              <input type="text" formControlName="value" class="form-control">
+            </span>
+            <span *ngIf="this.filterForm.value.filter == 'type'">
+              <select class="form-select" formControlName="value" aria-label="Default select example">
+                <option value="Public">Public</option>
+                <option value="Private">Private</option>
+              </select>
+            </span>
+            <span *ngIf="this.filterForm.value.filter == 'Amenities'">
+              <input type="text" formControlName="value" class="form-control">
+            </span>
+          </div>
           <div class="col-auto">
-            <button class="btn btn-primary" (click)="filter_parkings()">Search</button>
+            <button class="btn btn-primary float-end" (click)="filter_parkings(this.filterForm.value.filter, this.filterForm.value.value)">Search</button>
           </div>
         </div>
 
