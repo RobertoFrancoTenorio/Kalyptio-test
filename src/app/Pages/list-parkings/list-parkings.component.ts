@@ -65,12 +65,11 @@ export class ListParkingsComponent implements OnInit {
   }
 
 
-  get_Parking(id: string, parking: {}, content){
+  get_Parking(id: string, parking: {}){
     this.selected_parking = id
     this.parking_Service.get_Parking(id).subscribe(parking => {
       this.current_parking = parking
     })
-
     const navigationExtras : NavigationExtras = {
       state: {
         id: id,
@@ -78,12 +77,6 @@ export class ListParkingsComponent implements OnInit {
       }
     }
     this.router.navigate(['parking-details'], navigationExtras)
-
-    /* this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
-			(result) => {
-				this.closeResult = `Closed with: ${result}`;
-			},
-		); */
   }
 
   async filter_parkings(filter, value){
@@ -93,14 +86,15 @@ export class ListParkingsComponent implements OnInit {
       switch(filter){
         case 'Max Price':
           filtrados = parkings.filter(parking => parking['price'] >= value)
-          this.go_to_filtered(filtrados)
+          this.go_to_filtered(filtrados, filter, value)
         break;
         case 'Min Price':
           filtrados = parkings.filter(parking => parking['price'] <= value)
-          this.go_to_filtered(filtrados)
+          this.go_to_filtered(filtrados, filter, value)
         break;
         case 'amenities':
           let results: any = []
+          value = this.amenitiesForm.value.amenities.map((checked, index) => checked ? this.services[index].name : null).filter(value => value !== null);
           let amenitiesList = this.amenitiesForm.value.amenities.map((checked, index) => checked ? this.services[index].name : null).filter(value => value !== null);
             for(const amenitie of amenitiesList) {
               results.push(parkings.filter(parking => parking['amenities'].includes(amenitie)))
@@ -111,10 +105,11 @@ export class ListParkingsComponent implements OnInit {
               resultsNewSet.add(result)
             }
             console.log(resultsNewSet.values())
+            this.go_to_filtered(resultsNewSet, filter, value)
           break;
         default:
           filtrados = parkings.filter(parking => parking[filter] == value)
-          this.go_to_filtered(filtrados)
+          this.go_to_filtered(filtrados, filter, amenitiesList)
       }
     })
   }
@@ -129,17 +124,18 @@ export class ListParkingsComponent implements OnInit {
   loadParkings(){
     this.parking_Service.getParkings().subscribe(parkings => {
       console.log('parkings', parkings);
-      
+
       this.parkingList = parkings
     })
   }
 
-  go_to_filtered(filtered_parkings){    
+  go_to_filtered(filtered_parkings, filter, value){
+    console.log('filtered', filtered_parkings.values())
     let navigationExtras : NavigationExtras = {
       state: {
         list: filtered_parkings,
         filter: this.filterForm.value.filter,
-        value: this.filterForm.value.value
+        value: value
       }
     }
     this.router.navigate(['filtered-parkings'], navigationExtras)

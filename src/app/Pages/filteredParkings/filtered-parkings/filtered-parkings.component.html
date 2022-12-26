@@ -1,1 +1,175 @@
-<p>filtered-parkings works!</p>
+<body class="container-sm mt-3">
+  <br>
+  <div class="row">
+    <div class="col-auto">
+      <h5>Filtered parkings by: <strong>{{filter_Param}}</strong></h5>
+    </div>
+    <div class="col-auto">
+      <h5>Value: <strong>{{value_param}}</strong></h5>
+    </div>
+  </div>
+  <div class="col-12 col-md-12 col-lg-12" *ngFor="let parking of parking_list; let i = index">
+    <div class="card mb-3" (click)="get_Parking(i, content)">
+      <div class="row">
+        <div class="col-5 col-md-5">
+          <div id="carouselExampleIndicators" class="carousel slide" id="general-carousel" data-bs-ride="true">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner w-100 h-100">
+              <div class="carousel-item active w-100 h-100">
+                <img src="https://circontrol.com/wp-content/uploads/2019/02/180125-Circontrol-BAIXA-80-1080x675.jpg" class="img-fluid w-100 h-100 " alt="...">
+              </div>
+              <div class="carousel-item w-100 h-100">
+                <img src="https://circontrol.com/wp-content/uploads/2019/02/180125-Circontrol-BAIXA-80-1080x675.jpg" class="img-fluid w-100 h-100" alt="...">
+              </div>
+              <div class="carousel-item w-100 h-100">
+                <img src="https://circontrol.com/wp-content/uploads/2019/02/180125-Circontrol-BAIXA-80-1080x675.jpg" class="img-responsive w-100 h-100" alt="...">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col" id="parking-info">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-auto">
+                <span class="card-title">{{parking.address}}</span>
+              </div>
+              <div class="col-auto">
+                <span class="card-title"><i class="fa-solid fa-star"></i> {{parking.score}}</span>
+              </div>
+              <hr>
+            </div>
+            <div class="row" id="icon-container">
+              <div class="col-2 col-md-7 mb-2" *ngIf="parking.amenities.includes('Cámaras')">
+                <div class="row">
+                  <div class="col-auto" id="icon">
+                    <i class="fa-solid fa-eye" id="icon-services"></i>
+                  </div>
+                  <div class="col-auto d-none d-sm-block" id="description">
+                    <small>Cámaras</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-2 col-md-5 mb-2" *ngIf="parking.amenities.includes('Cajón Techado')">
+                <div class="row">
+                  <div class="col-auto" id="icon">
+                    <i class="fa-solid fa-person-shelter" id="icon-services"></i>
+                  </div>
+                  <div class="col-auto d-none d-sm-block" id="description">
+                    <small>Cajón Techado</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-2 col-md-7 mb-2" *ngIf="parking.amenities.includes('Departamento')">
+                <div class="row">
+                  <div class="col-auto" id="icon">
+                    <i class="fa-solid fa-building-wheat" id="icon-services"></i>
+                  </div>
+                  <div class="col-auto d-none d-sm-block" id="description">
+                    <small>Departamento</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-2 col-md-5 mb-2" *ngIf="parking.amenities.includes('Planta Baja')">
+                <div class="row">
+                  <div class="col-auto" id="icon">
+                    <i class="fa-solid fa-stairs" id="icon-services"></i>
+                  </div>
+                  <div class="col-auto d-none d-sm-block" id="description">
+                    <small>Planta Baja</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-2 col-md-7 mb-1" *ngIf="parking.amenities.includes('Estacionamiento Cerrado')">
+                <div class="row">
+                  <div class="col-auto" id="icon">
+                    <i class="fa-solid fa-car-tunnel" id="icon-services"></i>
+                  </div>
+                  <div class="col-auto d-none d-sm-block" id="description">
+                    <small>Estacionamiento Cerrado</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-2 col-md-5 mb-1" *ngIf="parking.amenities.includes('Lugar en batería')">
+                <div class="row">
+                  <div class="col-auto" id="icon">
+                    <i class="fa-solid fa-bars" id="icon-services"></i>
+                  </div>
+                  <div class="col-auto d-none d-sm-block" id="description">
+                    <small>Lugar en batería</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <small><i class="fa-solid fa-dollar-sign"></i>{{parking.price}}MXN/Mes <i class="fa-solid fa-arrow-right"></i> <i class="fa-solid fa-dollar-sign" id="dolar"></i><small class="total">{{ parking.price * 12 * 0.73 | number : '1.2-2'}} Total</small></small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Parking Information</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modalReference.close()"></button>
+    </div>
+    <div class="modal-body">
+      <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner w-100 h-100">
+          <div class="carousel-item active w-100 h-100">
+            <img src="https://circontrol.com/wp-content/uploads/2019/02/180125-Circontrol-BAIXA-80-1080x675.jpg" class="img-fluid w-100 h-100 " alt="...">
+          </div>
+          <div class="carousel-item w-100 h-100">
+            <img src="https://circontrol.com/wp-content/uploads/2019/02/180125-Circontrol-BAIXA-80-1080x675.jpg" class="img-fluid w-100 h-100" alt="...">
+          </div>
+          <div class="carousel-item w-100 h-100">
+            <img src="https://circontrol.com/wp-content/uploads/2019/02/180125-Circontrol-BAIXA-80-1080x675.jpg" class="img-responsive w-100 h-100" alt="...">
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <h6>Address: <strong>{{current_parking?.address}}</strong></h6>
+        </div>
+        <div class="col-12 col-md-6">
+          <h6>Score: <strong>{{current_parking?.score}}</strong></h6>
+        </div>
+        <div class="col-12 col-md-6">
+          <h6>Price: <strong>{{current_parking?.price}}</strong></h6>
+        </div>
+        <div class="col-12 col-md-6">
+          <h6>Type: <strong>{{current_parking?.type}}</strong></h6>
+        </div>
+        <div class="col-12 col-md-6">
+          Amenities
+          <div class="row">
+            <div class="col-12" *ngFor="let amenitie of current_parking?.amenities">
+              <h6><li><strong>{{amenitie}}</strong></li></h6>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <textarea name="" [value]="current_parking?.address" id="" cols="30" rows="5" class="form-control"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-danger" (click)="modalReference.close()">Close</button>
+    </div>
+  </ng-template>
+  <hr />
+  <pre>{{ closeResult }}</pre>
+</body>
+

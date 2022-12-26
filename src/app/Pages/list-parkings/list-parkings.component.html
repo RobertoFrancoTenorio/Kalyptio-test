@@ -56,7 +56,7 @@
 
       </div>
       <div class="col-12 col-md-12 col-lg-6" *ngFor="let parking of parkingList; let i = index">
-        <div class="card mb-3" (click)="get_Parking(i, parking, content)">
+        <div class="card mb-3" (click)="get_Parking(i, parking)">
           <div class="row">
             <div class="col-5 col-md-5">
               <div id="carouselExampleIndicators" class="carousel slide" id="general-carousel" data-bs-ride="true">
@@ -160,84 +160,7 @@
           </div>
         </div>
       </div>
-
     </div>
-
-    <ng-template #content let-modal class="col-12">
-      <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Parking Info</h4>
-        <button type="button" class="btn-close" aria-label="Close" (click)="modal.close()"></button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-12">
-            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
-              <div class="carousel-inner w-100 h-100">
-                <div class="carousel-item active w-100 h-100">
-                  <img src="https://circontrol.com/wp-content/uploads/2019/02/180125-Circontrol-BAIXA-80-1080x675.jpg" class="img-fluid w-100 h-100 " alt="...">
-                </div>
-                <div class="carousel-item w-100 h-100">
-                  <img src="https://circontrol.com/wp-content/uploads/2019/02/180125-Circontrol-BAIXA-80-1080x675.jpg" class="img-fluid w-100 h-100" alt="...">
-                </div>
-                <div class="carousel-item w-100 h-100">
-                  <img src="https://circontrol.com/wp-content/uploads/2019/02/180125-Circontrol-BAIXA-80-1080x675.jpg" class="img-responsive w-100 h-100" alt="...">
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <hr>
-          <div class="col-auto">
-            <h6><i class="fa-solid fa-location-dot"></i> Address: <strong>{{current_parking?.address}}</strong></h6>
-          </div>
-          <div class="col-auto">
-            <h6><i class="fa-solid fa-dollar-sign"></i> Price: <strong>{{current_parking?.price}}</strong></h6>
-          </div>
-          <br>
-          <div class="col-7">
-            <h6><i class="fa-solid fa-star"></i> Score: <strong>{{current_parking?.score}}</strong></h6>
-          </div>
-          <div class="col-5">
-            <h6><i class="fa-solid fa-magnifying-glass"></i> Type: <strong>{{current_parking?.score}}</strong></h6>
-          </div>
-          <hr>
-          <span class="col-12">
-            <div class="row">
-              <h5>Amenities</h5>
-              <div class="col-6">
-                <h6 *ngIf="current_parking?.amenities.includes('Cámaras')"><i class="fa-solid fa-circle-check"></i> Cámaras</h6>
-                <h6 *ngIf="!current_parking?.amenities.includes('Cámaras')"><i class="fa-solid fa-circle-xmark"></i> Cámaras</h6>
-              </div>
-              <div class="col-6">
-                <h6 *ngIf="current_parking?.amenities.includes('Cajón Techado')"><i class="fa-solid fa-circle-check"></i> Cámaras</h6>
-                <h6 *ngIf="!current_parking?.amenities.includes('Cajón Techado')"><i class="fa-solid fa-circle-xmark"></i> Cámaras</h6>
-              </div>
-              <div class="col-6">
-                <h6 *ngIf="current_parking?.amenities.includes('Departamento')"><i class="fa-solid fa-circle-check"></i> Cámaras</h6>
-                <h6 *ngIf="!current_parking?.amenities.includes('Departamento')"><i class="fa-solid fa-circle-xmark"></i> Cámaras</h6>
-              </div>
-              <div class="col-6">
-                <h6 *ngIf="current_parking?.amenities.includes('Planta Baja')"><i class="fa-solid fa-circle-check"></i> Cámaras</h6>
-                <h6 *ngIf="!current_parking?.amenities.includes('Planta Baja')"><i class="fa-solid fa-circle-xmark"></i> Cámaras</h6>
-              </div>
-              <div class="col-6">
-                <h6 *ngIf="current_parking?.amenities.includes('Estacionamiento Cerrado')"><i class="fa-solid fa-circle-check"></i> Cámaras</h6>
-                <h6 *ngIf="!current_parking?.amenities.includes('Estacionamiento Cerrado')"><i class="fa-solid fa-circle-xmark"></i> Cámaras</h6>
-              </div>
-              <div class="col-6">
-                <h6 *ngIf="current_parking?.amenities.includes('Lugar en batería')"><i class="fa-solid fa-circle-check"></i> Cámaras</h6>
-                <h6 *ngIf="!current_parking?.amenities.includes('Lugar en batería')"><i class="fa-solid fa-circle-xmark"></i> Cámaras</h6>
-              </div>
-            </div>
-          </span>
-        </div>
-        <h5>Description</h5>
-        <h6>{{current_parking?.description}}</h6>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-danger" (click)="delete_Parking(0)">Eliminar</button>
-      </div>
-    </ng-template>
   </div>
 </body>
 
