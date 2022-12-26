@@ -10,12 +10,15 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FilteredParkingsComponent } from './Pages/filteredParkings/filtered-parkings/filtered-parkings.component';
+import { ParkingDetailsComponent } from './Pages/parking-details/parking-details.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     NewParkingComponent,
     ListParkingsComponent,
     FilteredParkingsComponent,
+    ParkingDetailsComponent,
   ],
   imports: [
     FormsModule,

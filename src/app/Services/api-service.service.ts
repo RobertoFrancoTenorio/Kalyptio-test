@@ -29,4 +29,8 @@ export class APIServiceService {
     console.log('get_FILTERED_parkings_SERVICE')
     return this.http.get(this.url + 'search_parking');
   }
+
+  delete_parking(id: string){
+    return this.http.delete(this.url + id);
+  }
 }

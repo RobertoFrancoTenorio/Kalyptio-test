@@ -14,25 +14,25 @@
       </div>
     </div>
     <br>
-    <div class="row" [formGroup]="filterForm">
+    <div class="row" *ngIf="parkingList.length != 0" [formGroup]="filterForm">
       <div class="col-12 mb-3">
         <div class="row">
-          <div class="col-6">
+          <div class="col-6 col-md-auto">
             <label for="exampleFormControlInput1" class="form-label">Filter by:</label>
           </div>
-          <div class="col-6">
+          <div class="col-6 col-md-3">
             <select class="form-select" formControlName="filter" aria-label="Default select example">
-              <option value="score">Max Price</option>
-              <option value="score">Min Price</option>
+              <option value="Max Price">Max Price</option>
+              <option value="Min Price">Min Price</option>
               <option value="type">Type</option>
-              <option value="Amenities">Amenities</option>
+              <option value="amenities">Amenities</option>
             </select>
           </div>
-          <div class="col-6 mt-sm-3" *ngIf="this.filterForm.value.filter != ''">
+          <div class="col-6 col-md-auto" *ngIf="this.filterForm.value.filter != ''">
             <label for="exampleFormControlInput1" class="form-label">Value</label>
           </div>
-          <div class="col-6 mt-2" *ngIf="this.filterForm.value.filter != ''">
-            <span *ngIf="this.filterForm.value.filter == 'score'">
+          <div class="col-6 col-md-3" *ngIf="this.filterForm.value.filter != ''">
+            <span *ngIf="this.filterForm.value.filter == 'Max Price' || this.filterForm.value.filter == 'Min Price'">
               <input type="text" formControlName="value" class="form-control">
             </span>
             <span *ngIf="this.filterForm.value.filter == 'type'">
@@ -41,8 +41,12 @@
                 <option value="Private">Private</option>
               </select>
             </span>
-            <span *ngIf="this.filterForm.value.filter == 'Amenities'">
-              <input type="text" formControlName="value" class="form-control">
+            <span *ngIf="this.filterForm.value.filter == 'amenities'">
+              <form [formGroup]="amenitiesForm" class="row">
+                <span class="col-12 col-md-12 col-xl-6" *ngFor="let service of services; let amenitie of amenitiesForm.get('amenities')['controls'] ;let i = index">
+                  <span class="" formArrayName="amenities"><input class="form-check-input col-auto" type="checkbox" name="" id="" [formControlName]="i"> {{services[i].name}}</span>
+                </span>
+              </form>
             </span>
           </div>
           <div class="col-auto">
@@ -52,10 +56,10 @@
 
       </div>
       <div class="col-12 col-md-12 col-lg-6" *ngFor="let parking of parkingList; let i = index">
-        <div class="card mb-3">
+        <div class="card mb-3" (click)="get_Parking(i, parking, content)">
           <div class="row">
             <div class="col-5 col-md-5">
-              <div id="carouselExampleIndicators" class="carousel slide h-100 w-100" data-bs-ride="true">
+              <div id="carouselExampleIndicators" class="carousel slide" id="general-carousel" data-bs-ride="true">
                 <div class="carousel-indicators">
                   <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                   <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -74,18 +78,18 @@
                 </div>
               </div>
             </div>
-            <div class="col">
+            <div class="col" id="parking-info">
               <div class="card-body">
                 <div class="row">
                   <div class="col-auto">
-                    <h5 class="card-title">{{parking.address}}</h5>
+                    <span class="card-title">{{parking.address}}</span>
                   </div>
                   <div class="col-auto">
-                    <h5 class="card-title"><i class="fa-solid fa-star"></i> {{parking.score}}</h5>
+                    <span class="card-title"><i class="fa-solid fa-star"></i> {{parking.score}}</span>
                   </div>
                   <hr>
                 </div>
-                <div class="row">
+                <div class="row" id="icon-container">
                   <div class="col-2 col-md-7 mb-2" *ngIf="parking.amenities.includes('Cámaras')">
                     <div class="row">
                       <div class="col-auto" id="icon">
@@ -149,12 +153,8 @@
                   </div>
                 </div>
                 <div class="col-12">
-                  <br>
-
-                  <span><i class="fa-solid fa-dollar-sign"></i>{{parking.price}}MXN/Mes <i class="fa-solid fa-arrow-right"></i> <i class="fa-solid fa-dollar-sign" id="dolar"></i><span class="total">{{parking.price}} Total</span></span>
+                  <small><i class="fa-solid fa-dollar-sign"></i>{{parking.price}}MXN/Mes <i class="fa-solid fa-arrow-right"></i> <i class="fa-solid fa-dollar-sign" id="dolar"></i><small class="total">{{ parking.price * 12 * 0.73 | number : '1.2-2'}} Total</small></small>
                 </div>
-
-                <button class="btn btn-primary" (click)="get_Parking(i, content)">See more</button>
               </div>
             </div>
           </div>
@@ -165,21 +165,77 @@
 
     <ng-template #content let-modal class="col-12">
       <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
-        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+        <h4 class="modal-title" id="modal-basic-title">Parking Info</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.close()"></button>
       </div>
       <div class="modal-body">
-        {{current_parking | json}}
-        <form>
-          <div class="mb-3">
-            <label for="dateOfBirth">Date of birth</label>
-            <div class="input-group">
+        <div class="row">
+          <div class="col-12">
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+              <div class="carousel-inner w-100 h-100">
+                <div class="carousel-item active w-100 h-100">
+                  <img src="https://circontrol.com/wp-content/uploads/2019/02/180125-Circontrol-BAIXA-80-1080x675.jpg" class="img-fluid w-100 h-100 " alt="...">
+                </div>
+                <div class="carousel-item w-100 h-100">
+                  <img src="https://circontrol.com/wp-content/uploads/2019/02/180125-Circontrol-BAIXA-80-1080x675.jpg" class="img-fluid w-100 h-100" alt="...">
+                </div>
+                <div class="carousel-item w-100 h-100">
+                  <img src="https://circontrol.com/wp-content/uploads/2019/02/180125-Circontrol-BAIXA-80-1080x675.jpg" class="img-responsive w-100 h-100" alt="...">
+                </div>
+              </div>
             </div>
           </div>
-        </form>
+          
+          <hr>
+          <div class="col-auto">
+            <h6><i class="fa-solid fa-location-dot"></i> Address: <strong>{{current_parking?.address}}</strong></h6>
+          </div>
+          <div class="col-auto">
+            <h6><i class="fa-solid fa-dollar-sign"></i> Price: <strong>{{current_parking?.price}}</strong></h6>
+          </div>
+          <br>
+          <div class="col-7">
+            <h6><i class="fa-solid fa-star"></i> Score: <strong>{{current_parking?.score}}</strong></h6>
+          </div>
+          <div class="col-5">
+            <h6><i class="fa-solid fa-magnifying-glass"></i> Type: <strong>{{current_parking?.score}}</strong></h6>
+          </div>
+          <hr>
+          <span class="col-12">
+            <div class="row">
+              <h5>Amenities</h5>
+              <div class="col-6">
+                <h6 *ngIf="current_parking?.amenities.includes('Cámaras')"><i class="fa-solid fa-circle-check"></i> Cámaras</h6>
+                <h6 *ngIf="!current_parking?.amenities.includes('Cámaras')"><i class="fa-solid fa-circle-xmark"></i> Cámaras</h6>
+              </div>
+              <div class="col-6">
+                <h6 *ngIf="current_parking?.amenities.includes('Cajón Techado')"><i class="fa-solid fa-circle-check"></i> Cámaras</h6>
+                <h6 *ngIf="!current_parking?.amenities.includes('Cajón Techado')"><i class="fa-solid fa-circle-xmark"></i> Cámaras</h6>
+              </div>
+              <div class="col-6">
+                <h6 *ngIf="current_parking?.amenities.includes('Departamento')"><i class="fa-solid fa-circle-check"></i> Cámaras</h6>
+                <h6 *ngIf="!current_parking?.amenities.includes('Departamento')"><i class="fa-solid fa-circle-xmark"></i> Cámaras</h6>
+              </div>
+              <div class="col-6">
+                <h6 *ngIf="current_parking?.amenities.includes('Planta Baja')"><i class="fa-solid fa-circle-check"></i> Cámaras</h6>
+                <h6 *ngIf="!current_parking?.amenities.includes('Planta Baja')"><i class="fa-solid fa-circle-xmark"></i> Cámaras</h6>
+              </div>
+              <div class="col-6">
+                <h6 *ngIf="current_parking?.amenities.includes('Estacionamiento Cerrado')"><i class="fa-solid fa-circle-check"></i> Cámaras</h6>
+                <h6 *ngIf="!current_parking?.amenities.includes('Estacionamiento Cerrado')"><i class="fa-solid fa-circle-xmark"></i> Cámaras</h6>
+              </div>
+              <div class="col-6">
+                <h6 *ngIf="current_parking?.amenities.includes('Lugar en batería')"><i class="fa-solid fa-circle-check"></i> Cámaras</h6>
+                <h6 *ngIf="!current_parking?.amenities.includes('Lugar en batería')"><i class="fa-solid fa-circle-xmark"></i> Cámaras</h6>
+              </div>
+            </div>
+          </span>
+        </div>
+        <h5>Description</h5>
+        <h6>{{current_parking?.description}}</h6>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Save</button>
+        <button type="button" class="btn btn-outline-danger" (click)="delete_Parking(0)">Eliminar</button>
       </div>
     </ng-template>
   </div>

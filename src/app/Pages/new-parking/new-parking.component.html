@@ -53,7 +53,13 @@
     </div>
   </form>
   <br>
-
-  <button class="btn btn-success mt-1 mb-1" (click)="save_parking()" [disabled]="!parking_form.valid">Continue</button>
+  <div class="row mb-3">
+    <div class="col-auto">
+      <button class="btn btn-outline-primary float-right" (click)="go_to_home()">Return</button>
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-success" (click)="save_parking()" [disabled]="!parking_form.valid">Save</button>
+    </div>
+  </div>
 
 </div>

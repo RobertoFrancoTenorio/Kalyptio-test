@@ -14,6 +14,9 @@
   padding: 0;
 }
 
+#icon-container{
+  margin-left: 1px;
+}
 #icon-services{
   color: #fff;
   background-color: #152674;
@@ -21,13 +24,27 @@
   border-radius:20px
 }
 
-.card{
-  min-height: 26vh;
+.card-title{
+  font-size: 2vh;
 }
 
+#parking-info{
+  margin: 0;
+  padding: 0;
+  padding-right: 5px;
+}
 .fa-arrow-right{
   color: #152674;
   margin-right: 10px;
+}
+
+.card-body{
+  margin: 0;
+}
+
+hr{
+  width: 90%;
+  margin-left: 5%;
 }
 
 #dolar{
@@ -39,7 +56,27 @@
   font-weight: 600;
 }
 
-.carousel-inner{
+#general-carousel{
+  border: solid red 2px;
+  width: 90%;
+  height: 60%;
+  margin: 0;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
+@media (min-width: 769px){
+  #general-carousel{
+    border: solid red 2px;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+}
 

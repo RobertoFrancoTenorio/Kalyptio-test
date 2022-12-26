@@ -78,5 +78,8 @@ export class NewParkingComponent implements OnInit {
       this.router.navigate([''])
     })
   }
-
+  
+  go_to_home(){
+    this.router.navigate([''])
+  }
 }
